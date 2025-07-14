@@ -233,10 +233,10 @@ export default function Sustainability() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* Green Initiatives */}
-        <div className="space-y-4">
-          <Card>
+        <div className="h-full">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Target className="w-5 h-5" />
@@ -296,8 +296,8 @@ export default function Sustainability() {
         </div>
 
         {/* Milestones Timeline */}
-        <div className="space-y-4">
-          <Card>
+        <div className="h-full flex flex-col space-y-4">
+          <Card className="flex-1">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Award className="w-5 h-5" />

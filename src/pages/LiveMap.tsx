@@ -41,6 +41,61 @@ const activeRoutes = [
     status: "in-transit",
     cargo: "Import Goods",
     progress: 45
+  },
+  // New Central US Routes
+  {
+    id: "RT005",
+    source: { lat: 41.8781, lng: -87.6298, name: "Chicago, IL" },
+    destination: { lat: 32.7767, lng: -96.7970, name: "Dallas, TX" },
+    currentPosition: { lat: 35.2821, lng: -90.8447 },
+    status: "in-transit",
+    cargo: "Electronics",
+    progress: 78
+  },
+  {
+    id: "RT006",
+    source: { lat: 39.7392, lng: -104.9903, name: "Denver, CO" },
+    destination: { lat: 39.1012, lng: -94.5784, name: "Kansas City, MO" },
+    currentPosition: { lat: 39.3591, lng: -99.2659 },
+    status: "in-transit",
+    cargo: "Automotive Parts",
+    progress: 55
+  },
+  {
+    id: "RT007",
+    source: { lat: 44.9537, lng: -93.0900, name: "Minneapolis, MN" },
+    destination: { lat: 29.7604, lng: -95.3698, name: "Houston, TX" },
+    currentPosition: { lat: 38.9517, lng: -92.3341 },
+    status: "delayed",
+    cargo: "Grain & Feed",
+    progress: 42
+  },
+  {
+    id: "RT008",
+    source: { lat: 39.2904, lng: -76.6122, name: "Baltimore, MD" },
+    destination: { lat: 39.7392, lng: -104.9903, name: "Denver, CO" },
+    currentPosition: { lat: 39.1012, lng: -94.5784 },
+    status: "in-transit",
+    cargo: "Pharmaceuticals",
+    progress: 68
+  },
+  {
+    id: "RT009",
+    source: { lat: 46.8772, lng: -96.7898, name: "Fargo, ND" },
+    destination: { lat: 35.2271, lng: -101.8313, name: "Amarillo, TX" },
+    currentPosition: { lat: 41.5868, lng: -100.7737 },
+    status: "in-transit",
+    cargo: "Agricultural Equipment",
+    progress: 52
+  },
+  {
+    id: "RT010",
+    source: { lat: 39.1012, lng: -94.5784, name: "Kansas City, MO" },
+    destination: { lat: 43.0389, lng: -87.9065, name: "Milwaukee, WI" },
+    currentPosition: { lat: 41.2524, lng: -95.9980 },
+    status: "in-transit",
+    cargo: "Machinery",
+    progress: 35
   }
 ];
 
@@ -172,22 +227,22 @@ export default function LiveMap() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Truck className="w-5 h-5" />
-                Active Routes
+                Active Routes ({activeRoutes.length})
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 max-h-[520px] overflow-y-auto">
               {activeRoutes.map((route) => (
                 <div 
                   key={route.id}
-                  className={`p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-soft ${
-                    selectedRoute === route.id ? 'border-primary bg-accent' : 'border-border'
+                  className={`p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg ${
+                    selectedRoute === route.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
                   }`}
                   onClick={() => focusOnRoute(route)}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-foreground">{route.id}</h3>
+                    <h3 className="font-semibold text-gray-900">{route.id}</h3>
                     <Badge 
-                      className={route.status === 'delayed' ? 'bg-danger text-white' : 'bg-success text-white'}
+                      className={route.status === 'delayed' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}
                     >
                       {route.status.replace('-', ' ').toUpperCase()}
                     </Badge>
@@ -195,28 +250,28 @@ export default function LiveMap() {
                   
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <Package className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-foreground">{route.cargo}</span>
+                      <Package className="w-4 h-4 text-gray-600" />
+                      <span className="text-gray-800">{route.cargo}</span>
                     </div>
                     
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-success" />
-                      <span className="text-foreground">{route.source.name}</span>
+                      <MapPin className="w-4 h-4 text-green-600" />
+                      <span className="text-gray-800">{route.source.name}</span>
                     </div>
                     
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-danger" />
-                      <span className="text-foreground">{route.destination.name}</span>
+                      <MapPin className="w-4 h-4 text-red-600" />
+                      <span className="text-gray-800">{route.destination.name}</span>
                     </div>
                     
                     <div className="mt-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-muted-foreground">Progress</span>
-                        <span className="text-foreground">{route.progress}%</span>
+                        <span className="text-gray-600">Progress</span>
+                        <span className="text-gray-800">{route.progress}%</span>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
                         <div 
-                          className="bg-gradient-green h-2 rounded-full transition-all duration-300"
+                          className="bg-green-500 h-2 rounded-full transition-all duration-300"
                           style={{ width: `${route.progress}%` }}
                         ></div>
                       </div>
@@ -234,24 +289,24 @@ export default function LiveMap() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-success rounded-full"></div>
-                <span className="text-sm text-foreground">Source Location</span>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span className="text-sm text-gray-700">Source Location</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-danger rounded-full"></div>
-                <span className="text-sm text-foreground">Destination</span>
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span className="text-sm text-gray-700">Destination</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-info rounded-full flex items-center justify-center text-white text-xs">🚛</div>
-                <span className="text-sm text-foreground">Current Position</span>
+                <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-content text-white text-xs">🚛</div>
+                <span className="text-sm text-gray-700">Current Position</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-6 h-0.5 bg-success"></div>
-                <span className="text-sm text-foreground">Completed Route</span>
+                <div className="w-6 h-0.5 bg-green-500"></div>
+                <span className="text-sm text-gray-700">Completed Route</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-6 h-0.5 border-t-2 border-dashed border-danger"></div>
-                <span className="text-sm text-foreground">Delayed Route</span>
+                <div className="w-6 h-0.5 border-t-2 border-dashed border-red-500"></div>
+                <span className="text-sm text-gray-700">Delayed Route</span>
               </div>
             </CardContent>
           </Card>
